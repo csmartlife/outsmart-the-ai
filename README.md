@@ -39,6 +39,24 @@ npm run build      # static site in dist/
 
 ## Deploy
 
+### Cloudflare
+Either route works. Cloudflare's **Create** button now starts a *Worker* by default; that route uses `wrangler.jsonc` in this repo, which tells `npx wrangler deploy` to serve the built `dist/` folder.
+
+**Workers (default Create flow):** Workers & Pages → Create → Import a repository → `outsmart-the-ai`. Build command `npm run build`, deploy command `npx wrangler deploy` (the default).
+
+**Pages:** Workers & Pages → Create → Pages tab → Connect to Git, then use:
+
+| Setting | Value |
+|---|---|
+| Framework preset | None (or Vite) |
+| Build command | `npm run build` |
+| Build output directory | `dist` |
+| Node version | from `.node-version` (22) |
+
+Every push to `main` redeploys automatically. To show the programme link button, add the environment variable `VITE_PROGRAMME_URL` in the Pages project settings, then redeploy.
+
+### Other hosts
+
 `npm run build` makes a plain static site in `dist/` (relative paths, so it works in any folder). Upload `dist/` to any static host, e.g. GitHub Pages, Netlify, Cloudflare Pages, Vercel, or a university web server. Then make a QR code that points to the URL.
 
 For a USB stick or a kiosk laptop with no internet, use `npm run build:single`. It creates one self-contained file, `dist-single/index.html`, that opens directly in a browser.
