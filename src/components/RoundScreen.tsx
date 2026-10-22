@@ -1,4 +1,4 @@
-import { useState, type Dispatch } from 'react';
+import type { Dispatch } from 'react';
 import type { Impression, Lang, Round, Verdict } from '../content/types';
 import { fill, type UIStrings } from '../content/ui';
 import type { Action, RoundAnswer } from '../game/state';
@@ -21,7 +21,6 @@ interface Props {
 const IMPRESSIONS: Impression[] = ['looks-right', 'not-sure', 'seems-off'];
 const IMPRESSION_ICONS: Record<Impression, string> = { 'looks-right': '👍', 'not-sure': '🤔', 'seems-off': '🧐' };
 const VERDICTS: Verdict[] = ['supported', 'contradicted', 'insufficient'];
-const VERDICT_ICONS: Record<Verdict, string> = { supported: '✓', contradicted: '✗', insufficient: '?' };
 
 export function RoundScreen({ round, index, total, answer, dispatch, lang, t }: Props) {
   const stage = answer.submitted ? 'feedback' : answer.investigating ? 'evidence' : 'impression';
@@ -92,7 +91,6 @@ function Investigation({
   t,
   evidenceRef,
 }: Omit<Props, 'index' | 'total'> & { evidenceRef: React.Ref<HTMLHeadingElement> }) {
-  const [showDefs, setShowDefs] = useState(false);
   const ready = Boolean(answer.verdict && answer.reasonId);
 
   return (
@@ -130,30 +128,9 @@ function Investigation({
         name={`verdict-${round.id}`}
         legend={t.verdictPrompt}
         hint={t.verdictHint}
-        options={VERDICTS.map((v) => ({ value: v, label: t.verdicts[v], icon: VERDICT_ICONS[v] }))}
+        options={VERDICTS.map((v) => ({ value: v, label: t.verdicts[v], desc: t.verdictDefs[v] }))}
         value={answer.verdict}
         onChange={(verdict) => dispatch({ type: 'setVerdict', verdict })}
-        extra={
-          <div className="defs">
-            <button
-              type="button"
-              className="btn btn--link"
-              aria-expanded={showDefs}
-              aria-controls={`defs-${round.id}`}
-              onClick={() => setShowDefs(!showDefs)}
-            >
-              <span aria-hidden="true">ⓘ</span> {showDefs ? t.hideDefs : t.showDefs}
-            </button>
-            <dl id={`defs-${round.id}`} className="defs__list" hidden={!showDefs}>
-              {VERDICTS.map((v) => (
-                <div key={v}>
-                  <dt>{t.verdicts[v]}</dt>
-                  <dd>{t.verdictDefs[v]}</dd>
-                </div>
-              ))}
-            </dl>
-          </div>
-        }
       />
 
       <ChoiceGroup

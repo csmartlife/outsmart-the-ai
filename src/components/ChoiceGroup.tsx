@@ -3,6 +3,8 @@ import type { ReactNode } from 'react';
 export interface ChoiceOption<T extends string> {
   value: T;
   label: string;
+  /** Short explanation shown under the label. */
+  desc?: string;
   icon?: ReactNode;
 }
 
@@ -36,6 +38,8 @@ export function ChoiceGroup<T extends string>({ name, legend, hint, options, val
               name={name}
               value={opt.value}
               checked={value === opt.value}
+              aria-labelledby={opt.desc ? `${name}-${opt.value}-label` : undefined}
+              aria-describedby={opt.desc ? `${name}-${opt.value}-desc` : undefined}
               onChange={() => onChange(opt.value)}
             />
             <span className="choice__mark" aria-hidden="true" />
@@ -44,7 +48,16 @@ export function ChoiceGroup<T extends string>({ name, legend, hint, options, val
                 {opt.icon}
               </span>
             )}
-            <span className="choice__label">{opt.label}</span>
+            <span className="choice__text">
+              <span className="choice__label" id={`${name}-${opt.value}-label`}>
+                {opt.label}
+              </span>
+              {opt.desc && (
+                <span className="choice__desc" id={`${name}-${opt.value}-desc`}>
+                  {opt.desc}
+                </span>
+              )}
+            </span>
           </label>
         ))}
       </div>

@@ -40,12 +40,26 @@ export function Feedback({ round, index, total, answer, dispatch, lang, t, headi
         <p className="feedback__message">{message}</p>
       </div>
 
-      <dl className="compare">
-        <CompareRow label={t.youChose} value={answer.verdict ? t.verdicts[answer.verdict] : ''} ok={score.verdictCorrect} t={t} />
-        <CompareRow label={t.evidenceSupports} value={t.verdicts[round.correctVerdict]} t={t} />
-        <CompareRow label={t.yourReason} value={reasonText(answer.reasonId)} ok={score.reasonCorrect} t={t} />
-        {!score.reasonCorrect && <CompareRow label={t.strongestReason} value={reasonText(round.correctReasonId)} t={t} />}
-      </dl>
+      <ul className="results">
+        <ResultRow
+          label={t.resultVerdict}
+          ok={score.verdictCorrect}
+          points={score.verdictCorrect ? 2 : 0}
+          chosen={answer.verdict ? t.verdicts[answer.verdict] : ''}
+          answerLabel={t.evidenceShows}
+          answer={t.verdicts[round.correctVerdict]}
+          t={t}
+        />
+        <ResultRow
+          label={t.resultReason}
+          ok={score.reasonCorrect}
+          points={score.reasonCorrect ? 1 : 0}
+          chosen={reasonText(answer.reasonId)}
+          answerLabel={t.strongestReason}
+          answer={reasonText(round.correctReasonId)}
+          t={t}
+        />
+      </ul>
 
       <div className="card explain">
         <h3 className="card__label">{t.whyLabel}</h3>
@@ -78,18 +92,38 @@ export function Feedback({ round, index, total, answer, dispatch, lang, t, headi
   );
 }
 
-function CompareRow({ label, value, ok, t }: { label: string; value: string; ok?: boolean; t: UIStrings }) {
+interface ResultRowProps {
+  label: string;
+  ok: boolean;
+  points: number;
+  chosen: string;
+  answerLabel: string;
+  answer: string;
+  t: UIStrings;
+}
+
+/** One line per scored choice: what you picked, whether it was right, and the points. */
+function ResultRow({ label, ok, points, chosen, answerLabel, answer, t }: ResultRowProps) {
   return (
-    <div className={`compare__row${ok === undefined ? ' is-answer' : ok ? ' is-match' : ' is-diff'}`}>
-      <dt>{label}</dt>
-      <dd>
-        {ok !== undefined && (
-          <span className="result-tag">
-            <span aria-hidden="true">{ok ? '✓' : '✗'}</span> {ok ? t.match : t.noMatch}
-          </span>
+    <li className={`result${ok ? ' is-correct' : ' is-diff'}`}>
+      <span className="result__icon" aria-hidden="true">
+        {ok ? '✓' : '✗'}
+      </span>
+      <div className="result__body">
+        <p className="result__head">
+          <strong>{label}</strong>
+          <span className="result__status">{ok ? t.correct : t.notQuite}</span>
+        </p>
+        <p className="result__line">
+          <span className="muted">{t.youChose}:</span> {chosen}
+        </p>
+        {!ok && (
+          <p className="result__line result__answer">
+            <span className="muted">{answerLabel}:</span> <strong>{answer}</strong>
+          </p>
         )}
-        <span>{value}</span>
-      </dd>
-    </div>
+      </div>
+      <span className="result__points">+{points}</span>
+    </li>
   );
 }

@@ -49,7 +49,7 @@ export function Ending({ state, dispatch, lang, t }: Props) {
                   {fill(t.verdictReason, { v: s.verdictCorrect ? t.yes : t.no, r: s.reasonCorrect ? t.yes : t.no })}
                   <span className="visually-hidden">
                     {' '}
-                    ({s.verdictCorrect ? t.match : t.noMatch}, {s.reasonCorrect ? t.match : t.noMatch})
+                    ({s.verdictCorrect ? t.correct : t.notQuite}, {s.reasonCorrect ? t.correct : t.notQuite})
                   </span>
                 </p>
                 <p>{full ? t.demonstrated : round.tip[lang]}</p>

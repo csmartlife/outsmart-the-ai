@@ -772,18 +772,17 @@ h3:focus-visible {
   outline: 1.5px solid var(--ink);
 }
 
-/* ---------- Verdict definitions ---------- */
-.defs__list {
+/* ---------- Choice descriptions ---------- */
+.choice__text {
   display: grid;
-  gap: 8px;
-  padding: 12px 14px;
-  border-radius: 12px;
-  background: var(--surface-2);
-  animation: reveal 0.2s ease-out both;
+  gap: 2px;
+  min-width: 0;
 }
 
-.defs__list dt {
-  font-weight: 800;
+.choice__desc {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--muted);
 }
 
 .submit-area {
@@ -822,55 +821,88 @@ h3:focus-visible {
   font-size: 1.05rem;
 }
 
-.compare {
+.results {
+  list-style: none;
+  padding: 0;
   display: grid;
-  gap: 1px;
+  gap: 10px;
+}
+
+.result {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: start;
+  padding: 14px 16px;
   border-radius: var(--radius);
-  overflow: hidden;
-  border: 1.5px solid var(--line);
-  background: var(--line);
-}
-
-.compare__row {
-  padding: 12px 16px;
   background: var(--surface);
+  border: 2px solid var(--line);
 }
 
-.compare__row dt {
-  font-size: 0.82rem;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  color: var(--muted);
+.result.is-correct {
+  border-color: var(--good);
 }
 
-.compare__row dd {
+.result__icon {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  font-weight: 900;
+  color: var(--surface);
+}
+
+.is-correct .result__icon {
+  background: var(--good);
+}
+
+.is-diff .result__icon {
+  background: var(--diff);
+}
+
+.result__head {
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;
   gap: 4px 10px;
-  font-weight: 700;
+  font-size: 1.05rem;
 }
 
-.compare__row.is-answer {
-  background: var(--accent-soft);
-}
-
-.result-tag {
-  flex: none;
-  padding: 0 8px;
-  border-radius: 6px;
-  border: 1.5px solid currentColor;
-  font-size: 0.85rem;
+.result__status {
   font-weight: 800;
+  font-size: 0.95rem;
 }
 
-.is-match .result-tag {
+.is-correct .result__status {
   color: var(--good);
 }
 
-.is-diff .result-tag {
+.is-diff .result__status {
   color: var(--diff);
+}
+
+.result__line {
+  margin-top: 4px;
+  font-weight: 600;
+}
+
+.result__answer strong {
+  background: var(--accent-soft);
+  padding: 0 4px;
+  border-radius: 4px;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+.result__points {
+  font-weight: 900;
+  font-size: 1.15rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.is-diff .result__points {
+  color: var(--muted);
 }
 
 .takeaway {
