@@ -118,7 +118,7 @@ There are no logos. The programme is named only in a text heading (`programmeCon
 - [ ] After Cloudflare redeploys: play one game on the live site, then open `/stats` and check that it shows 1 started and 1 finished.
 - [ ] Real phones: iOS Safari and Android Chrome, scanning the actual QR code on venue Wi-Fi.
 - [ ] Screen readers: VoiceOver (iOS) and TalkBack (Android). Check the step announcements, the radio groups and the feedback heading.
-- [ ] A native Hong Kong Chinese speaker proofreads the 繁中 text, especially the title 「你能比 AI 更醒目嗎？」.
+- [ ] A native Hong Kong Chinese speaker proofreads the 繁中 text, now written in colloquial Hong Kong Cantonese (title 「你可唔可以醒過 AI？」).
 - [ ] Staff confirm the programme heading wording and the three conversation starters before the event.
 - [ ] Add and test the official programme URL if you want the button.
 - [ ] Play time with two or three real students (target: 3–4 minutes).
