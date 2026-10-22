@@ -2,14 +2,14 @@
 
 A mobile-first, bilingual (English / 繁體中文) evidence-checking game for an HKU Information Day BSIM presentation. Three rounds, about 3–4 minutes. No live AI, no accounts, and only anonymous play counts.
 
-> All scenarios and evidence are fictional teaching examples. AI-style answers are prepared examples. No live AI is running.
+> All scenarios and evidence are fictional teaching examples. AI responses are prepared examples. No live AI is running.
 
 ## How the game is put together
 
 ```
 src/
   content/
-    rounds.ts      ← THE SCENARIOS: questions, AI-style answers, evidence, answers, feedback, interests
+    rounds.ts      ← THE SCENARIOS: questions, AI responses, evidence, answers, feedback, interests
     ui.ts          ← all interface text (buttons, labels, messages) in en + zh
     types.ts       ← shapes of the content (Localized = { en, zh })
   config.ts        ← official programme link (hidden while empty)
