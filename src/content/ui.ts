@@ -8,7 +8,7 @@ import type { Impression, Lang, Verdict } from './types';
 const en = {
   langName: 'English',
   langToggleLabel: 'Language',
-  programmeContext: 'HKU Information Day · BSc in Information Management (BSIM)',
+  programmeContext: 'HKU Info Day · 2026',
   title: 'Can You Outsmart the AI?',
   subtitle: 'Three answers. Three decisions. Can you tell what the evidence supports?',
   supporting: 'You don’t need coding skills or specialist knowledge. Just curiosity and a willingness to check.',
@@ -123,7 +123,7 @@ export type UIStrings = typeof en;
 const zh: UIStrings = {
   langName: '繁體中文',
   langToggleLabel: '語言',
-  programmeContext: '港大資訊日 · 資訊管理學理學士（BSIM）',
+  programmeContext: '香港大學資訊日 · 2026',
   title: '你能比 AI 更醒目嗎？',
   subtitle: '三個答案，三個判斷。你能分辨證據支持甚麼嗎？',
   supporting: '你不需要懂編程，也不需要專門知識，只需要好奇心，以及願意查證的態度。',

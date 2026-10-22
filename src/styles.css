@@ -314,11 +314,10 @@ h3:focus-visible {
 
 /* ---------- Welcome ---------- */
 .eyebrow {
-  font-size: 0.85rem;
-  font-weight: 700;
+  font-size: 0.95rem;
+  font-weight: 800;
   letter-spacing: 0.02em;
   color: var(--muted);
-  text-transform: uppercase;
 }
 
 .hero {

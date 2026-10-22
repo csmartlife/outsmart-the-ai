@@ -16,8 +16,6 @@ export function Credits({ t, lang }: { t: UIStrings; lang: Lang }) {
         {lang === 'zh' ? (
           <>
             香港大學教育學院
-            <br />
-            <span lang="en">Faculty of Education, The University of Hong Kong</span>
           </>
         ) : (
           <>
