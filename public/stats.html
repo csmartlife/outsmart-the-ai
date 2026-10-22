@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>Outsmart the AI · Play counts</title>
+    <style>
+      :root {
+        --bg: #eef0f3;
+        --surface: #fff;
+        --ink: #15171c;
+        --muted: #4a515e;
+        --line: #cbd1da;
+        --accent: #ffcc33;
+        color-scheme: light;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: #111318;
+          --surface: #1b1e26;
+          --ink: #f2f0ea;
+          --muted: #b0b6c2;
+          --line: #353a47;
+          color-scheme: dark;
+        }
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--ink);
+        font: 16px/1.5 system-ui, -apple-system, 'Segoe UI', Roboto, 'PingFang HK', 'Noto Sans TC', sans-serif;
+      }
+      main { max-width: 720px; margin: 0 auto; padding: 24px 16px 40px; display: grid; gap: 18px; }
+      h1 { margin: 0; font-size: 1.6rem; font-weight: 900; }
+      .muted { color: var(--muted); margin: 0; font-size: 0.9rem; }
+      .tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; }
+      .tile { background: var(--surface); border: 1.5px solid var(--line); border-radius: 16px; padding: 14px 16px; }
+      .tile b { display: block; font-size: 2.4rem; line-height: 1.1; font-variant-numeric: tabular-nums; }
+      .tile span { color: var(--muted); font-weight: 700; font-size: 0.9rem; }
+      .tile.main { border: 2px solid var(--ink); }
+      .tile.main b { background: linear-gradient(transparent 80%, var(--accent) 80%); display: inline-block; }
+      section { background: var(--surface); border: 1.5px solid var(--line); border-radius: 16px; padding: 16px; }
+      h2 { margin: 0 0 10px; font-size: 1.05rem; }
+      .bar { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 12px; margin-bottom: 10px; font-weight: 600; }
+      .bar i { grid-column: 1 / -1; height: 10px; border-radius: 99px; background: var(--line); overflow: hidden; }
+      .bar i::after { content: ''; display: block; height: 100%; width: var(--w); background: var(--accent); border-right: 2px solid var(--ink); }
+      table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+      th, td { text-align: left; padding: 6px 4px; border-bottom: 1px solid var(--line); }
+      th:not(:first-child), td:not(:first-child) { text-align: right; }
+      button { font: inherit; font-weight: 800; min-height: 44px; padding: 0 16px; border-radius: 12px; border: 2px solid var(--ink); background: var(--accent); color: #15171c; cursor: pointer; }
+      .row { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+      .error { color: #a8321c; font-weight: 700; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Can You Outsmart the AI? · Play counts 遊玩統計</h1>
+      <p class="muted">
+        Anonymous totals only. No names, answers or personal data are collected.
+        只有匿名總數，不收集暱稱、答案或個人資料。
+      </p>
+
+      <div class="tiles">
+        <div class="tile main"><b id="started">–</b><span>Games started 開始遊戲</span></div>
+        <div class="tile"><b id="finished">–</b><span>Games finished 完成遊戲</span></div>
+        <div class="tile"><b id="rate">–</b><span>Finish rate 完成率</span></div>
+        <div class="tile"><b id="today">–</b><span>Started today (HK) 今日開始</span></div>
+      </div>
+
+      <section>
+        <h2>Topics players chose 玩家選擇的話題</h2>
+        <div id="interests"></div>
+      </section>
+
+      <section>
+        <h2>By day (Hong Kong time) 每日統計</h2>
+        <table>
+          <thead><tr><th>Date 日期</th><th>Started 開始</th><th>Finished 完成</th></tr></thead>
+          <tbody id="days"></tbody>
+        </table>
+      </section>
+
+      <div class="row">
+        <button type="button" id="refresh">Refresh 重新整理</button>
+        <p class="muted" id="updated" aria-live="polite"></p>
+      </div>
+    </main>
+
+    <script>
+      const LABELS = {
+        'trustworthy-info': 'Finding trustworthy information 尋找可信的資訊',
+        data: 'Understanding what data really says 理解數據真正說了甚麼',
+        'digital-tools': 'Designing useful digital tools 設計實用的數碼工具',
+      };
+      const $ = (id) => document.getElementById(id);
+      const today = () => new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Hong_Kong' });
+
+      function render(d) {
+        const { started, finished } = d.totals;
+        $('started').textContent = started;
+        $('finished').textContent = finished;
+        $('rate').textContent = started ? Math.round((finished / started) * 100) + '%' : '–';
+        $('today').textContent = (d.days[today()] || {}).started || 0;
+
+        const max = Math.max(1, ...Object.values(d.interests));
+        $('interests').replaceChildren(
+          ...Object.entries(LABELS).map(([id, label]) => {
+            const n = d.interests[id] || 0;
+            const row = document.createElement('div');
+            row.className = 'bar';
+            row.innerHTML = '<span></span><span></span><i></i>';
+            row.children[0].textContent = label;
+            row.children[1].textContent = n;
+            row.children[2].style.setProperty('--w', (n / max) * 100 + '%');
+            return row;
+          }),
+        );
+
+        const rows = Object.entries(d.days).sort((a, b) => b[0].localeCompare(a[0]));
+        $('days').replaceChildren(
+          ...(rows.length ? rows : [['No plays yet 尚未有紀錄', { started: '', finished: '' }]]).map(([day, v]) => {
+            const tr = document.createElement('tr');
+            for (const text of [day, v.started, v.finished]) {
+              const td = document.createElement('td');
+              td.textContent = text;
+              tr.append(td);
+            }
+            return tr;
+          }),
+        );
+      }
+
+      async function load() {
+        try {
+          const res = await fetch('/api/stats', { cache: 'no-store' });
+          if (!res.ok) throw new Error('HTTP ' + res.status);
+          render(await res.json());
+          $('updated').textContent = 'Updated 更新於 ' + new Date().toLocaleTimeString();
+          $('updated').classList.remove('error');
+        } catch (e) {
+          $('updated').textContent = 'Could not load counts 無法載入統計 (' + e.message + ')';
+          $('updated').classList.add('error');
+        }
+      }
+
+      $('refresh').addEventListener('click', load);
+      load();
+      setInterval(load, 30000);
+    </script>
+  </body>
+</html>

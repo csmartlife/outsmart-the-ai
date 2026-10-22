@@ -19,6 +19,17 @@ function verifiedUrl(raw: string | undefined): string | null {
   }
 }
 
+/**
+ * Anonymous play counter (see worker/index.ts). On by default for the deployed site;
+ * off for the offline single-file build, in tests, or with VITE_COUNT_PLAYS=false.
+ */
+const COUNT_PLAYS = true;
+
 export const config = {
   programmeUrl: verifiedUrl(import.meta.env.VITE_PROGRAMME_URL || PROGRAMME_URL),
+  countPlays:
+    COUNT_PLAYS &&
+    import.meta.env.MODE !== 'single' &&
+    import.meta.env.MODE !== 'test' &&
+    import.meta.env.VITE_COUNT_PLAYS !== 'false',
 };

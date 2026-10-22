@@ -5,6 +5,8 @@ import { interests, rounds } from './content/rounds';
 import { ui } from './content/ui';
 
 afterEach(cleanup);
+// jsdom has no layout, so scrolling is a no-op here.
+window.scrollTo = () => {};
 
 const en = ui.en;
 const zh = ui.zh;
@@ -19,6 +21,8 @@ describe('full play-through', () => {
     expect(screen.getByText(/A Very Short Introduction/)).toBeTruthy();
     expect(screen.getByText(/Dr\. Jeremy Ng, Ms\. Cindy Liang/)).toBeTruthy();
     click(new RegExp(en.start));
+    fireEvent.change(screen.getByLabelText(en.nickLabel), { target: { value: 'Mei' } });
+    click(new RegExp(en.nickStart));
 
     rounds.forEach((round, i) => {
       pick(en.impressions['not-sure']);
@@ -51,7 +55,7 @@ describe('full play-through', () => {
       click(new RegExp(i === rounds.length - 1 ? en.seeRecap : en.nextRound));
     });
 
-    expect(screen.getByRole('heading', { name: en.recapTitle })).toBeTruthy();
+    expect(screen.getByRole('heading', { name: 'Mei’s information detective recap' })).toBeTruthy();
     expect(document.querySelector('.score-big__num')?.textContent).toBe('9');
     expect(screen.getAllByText(en.demonstrated)).toHaveLength(3);
     expect(screen.queryByRole('button', { name: new RegExp(en.showStarter) })).toBeNull();
@@ -68,14 +72,20 @@ describe('full play-through', () => {
     click(zh.starterClose);
     click(en.langName);
 
-    expect(screen.getByText(/A Very Short Introduction/)).toBeTruthy();
-
     // No programme link unless a verified URL is configured.
     expect(screen.queryByRole('link', { name: new RegExp(en.programmeLink) })).toBeNull();
 
+    // Encouraging final page, then a clean restart.
+    click(new RegExp(en.finish));
+    expect(screen.getByRole('heading', { name: 'Congratulations, Mei!' })).toBeTruthy();
+    expect(screen.getByText(en.celebrateThanks)).toBeTruthy();
+    expect(screen.getByText(/A Very Short Introduction/)).toBeTruthy();
+    for (const r of rounds) expect(screen.getByText(r.takeaway.en)).toBeTruthy();
     click(new RegExp(en.playAgain));
     expect(screen.getByRole('heading', { name: en.title })).toBeTruthy();
     click(new RegExp(en.start));
+    expect((screen.getByLabelText(en.nickLabel) as HTMLInputElement).value).toBe('');
+    click(new RegExp(en.nickSkip));
     expect(screen.getByText(rounds[0].title.en)).toBeTruthy();
     expect(screen.getAllByRole('radio').every((r) => !(r as HTMLInputElement).checked)).toBe(true);
   });
@@ -83,6 +93,8 @@ describe('full play-through', () => {
   it('keeping a correct first impression is recognised too', () => {
     render(<App />);
     click(new RegExp(en.start));
+    click(new RegExp(en.nickSuggestions[0]));
+    click(new RegExp(en.nickStart));
     const r = rounds[0];
     pick(en.impressions['seems-off']);
     click(new RegExp(en.toEvidence));

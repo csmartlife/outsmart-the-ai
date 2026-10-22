@@ -1084,6 +1084,176 @@ h3:focus-visible {
   font-weight: 600;
 }
 
+/* ---------- Nickname ---------- */
+.nickname__badge {
+  font-size: 2.6rem;
+  line-height: 1;
+}
+
+.nickname__form {
+  display: grid;
+  gap: 10px;
+}
+
+.nickname__label {
+  font-weight: 900;
+  font-size: 1.1rem;
+}
+
+.nickname__input {
+  width: 100%;
+  min-height: 56px;
+  padding: 12px 16px;
+  border-radius: 14px;
+  border: 2px solid var(--ink);
+  background: var(--surface);
+  font-size: 1.2rem; /* 16px+ keeps iOS from zooming in */
+  font-weight: 700;
+}
+
+.nickname__input::placeholder {
+  color: var(--muted);
+  font-weight: 500;
+}
+
+.nickname__suggest {
+  margin-top: 4px;
+  color: var(--muted);
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.nickname__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.chip-btn {
+  min-height: 44px;
+  padding: 0 14px;
+  border-radius: 999px;
+  border: 2px solid var(--line);
+  background: var(--surface);
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.chip-btn.is-selected {
+  border-color: var(--ink);
+  background: var(--accent-soft);
+}
+
+.nickname__skip {
+  align-self: center;
+}
+
+/* ---------- Celebration ---------- */
+.celebrate {
+  position: relative;
+}
+
+.celebrate__hero {
+  position: relative;
+  display: grid;
+  gap: 10px;
+  justify-items: center;
+  text-align: center;
+  padding: 28px 18px 24px;
+  border-radius: 24px;
+  background: var(--accent);
+  color: var(--on-accent);
+  border: 3px solid var(--ink);
+  box-shadow: 0 6px 0 var(--ink);
+  overflow: hidden;
+}
+
+.celebrate__trophy {
+  font-size: 3.2rem;
+  line-height: 1;
+  animation: pop 0.6s cubic-bezier(0.2, 1.5, 0.4, 1) 0.1s both;
+}
+
+.celebrate__title {
+  font-size: clamp(1.8rem, 8vw, 2.5rem);
+  line-height: 1.1;
+  font-weight: 900;
+  text-wrap: balance;
+}
+
+.celebrate__title:focus-visible {
+  outline-color: var(--on-accent);
+}
+
+.celebrate__lead {
+  font-weight: 650;
+  max-width: 34em;
+}
+
+.celebrate__list {
+  padding-left: 1.3em;
+  display: grid;
+  gap: 8px;
+  font-weight: 700;
+}
+
+.celebrate__thanks {
+  font-size: 1.2rem;
+  font-weight: 900;
+  text-align: center;
+  text-wrap: balance;
+}
+
+.confetti {
+  position: absolute;
+  inset: -20px 0 auto;
+  height: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.confetti__piece {
+  position: absolute;
+  top: 0;
+  left: calc((var(--i) * 37 % 100) * 1%);
+  width: 8px;
+  height: 14px;
+  border-radius: 2px;
+  background: var(--ink);
+  opacity: 0;
+  animation: confetti 1.8s ease-in calc(var(--i) * 45ms) 1 both;
+}
+
+.confetti__piece:nth-child(3n) {
+  background: var(--accent);
+  outline: 1.5px solid var(--ink);
+}
+
+.confetti__piece:nth-child(4n) {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+@keyframes confetti {
+  0% {
+    opacity: 1;
+    transform: translateY(0) rotate(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(520px) rotate(calc(var(--i) * 47deg + 220deg));
+  }
+}
+
+@keyframes pop {
+  from {
+    transform: scale(0.3) rotate(-20deg);
+    opacity: 0;
+  }
+}
+
 /* ---------- Footer ---------- */
 .footer {
   padding-block: 20px max(28px, env(safe-area-inset-bottom, 0px));

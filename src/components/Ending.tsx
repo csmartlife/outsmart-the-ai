@@ -4,7 +4,6 @@ import { interests, rounds } from '../content/rounds';
 import type { Interest, Lang } from '../content/types';
 import { fill, type UIStrings } from '../content/ui';
 import { scoreRound, totalScore, type Action, type GameState } from '../game/state';
-import { Credits } from './Credits';
 import { StarterDialog } from './StarterDialog';
 import { ChoiceGroup } from './ChoiceGroup';
 import { useFocusHeading } from './useFocusHeading';
@@ -26,7 +25,7 @@ export function Ending({ state, dispatch, lang, t }: Props) {
   return (
     <section className="screen ending" aria-labelledby="recap-title">
       <h2 id="recap-title" className="round__title" tabIndex={-1} ref={headingRef}>
-        {t.recapTitle}
+        {state.nickname ? fill(t.recapTitleNamed, { name: state.nickname }) : t.recapTitle}
       </h2>
 
       <p className="score-big">
@@ -98,9 +97,12 @@ export function Ending({ state, dispatch, lang, t }: Props) {
             {t.programmeLink} <span aria-hidden="true">↗</span>
           </a>
         )}
-        <button type="button" className="btn btn--secondary btn--block" onClick={() => dispatch({ type: 'restart' })}>
-          <span aria-hidden="true">↻ </span>
-          {t.playAgain}
+        <button
+          type="button"
+          className={`btn btn--block ${choice ? 'btn--secondary' : 'btn--primary'}`}
+          onClick={() => dispatch({ type: 'finish' })}
+        >
+          {t.finish} <span aria-hidden="true">🎉</span>
         </button>
       </div>
 
@@ -115,7 +117,6 @@ export function Ending({ state, dispatch, lang, t }: Props) {
           }}
         />
       )}
-      <Credits t={t} lang={lang} />
     </section>
   );
 }

@@ -10,17 +10,28 @@ export interface RoundAnswer {
   submitted: boolean;
 }
 
-export type Screen = 'welcome' | 'round' | 'ending';
+export type Screen = 'welcome' | 'nickname' | 'round' | 'ending' | 'celebrate';
 
 export interface GameState {
   screen: Screen;
   roundIndex: number;
   answers: RoundAnswer[];
   interest: Interest | null;
+  /** Optional, shown only on this screen. Never sent or stored. */
+  nickname: string;
+}
+
+export const NICKNAME_MAX = 20;
+
+/** Trim, collapse spaces and cap the length (by characters, so Chinese and emoji count once). */
+export function cleanNickname(raw: string): string {
+  return Array.from(raw.replace(/\s+/g, ' ').trimStart()).slice(0, NICKNAME_MAX).join('');
 }
 
 export type Action =
   | { type: 'start' }
+  | { type: 'setNickname'; nickname: string }
+  | { type: 'begin' }
   | { type: 'setImpression'; impression: Impression }
   | { type: 'beginInvestigation' }
   | { type: 'openCard'; cardId: string }
@@ -29,6 +40,8 @@ export type Action =
   | { type: 'submit' }
   | { type: 'next' }
   | { type: 'setInterest'; interest: Interest }
+  | { type: 'finish' }
+  | { type: 'backToRecap' }
   | { type: 'restart' };
 
 const emptyAnswer = (): RoundAnswer => ({
@@ -45,6 +58,7 @@ export const initialState = (roundCount: number): GameState => ({
   roundIndex: 0,
   answers: Array.from({ length: roundCount }, emptyAnswer),
   interest: null,
+  nickname: '',
 });
 
 export function makeReducer(rounds: Round[]) {
@@ -58,7 +72,15 @@ export function makeReducer(rounds: Round[]) {
 
     switch (action.type) {
       case 'start':
-        return state.screen === 'welcome' ? { ...state, screen: 'round', roundIndex: 0 } : state;
+        return state.screen === 'welcome' ? { ...state, screen: 'nickname' } : state;
+
+      case 'setNickname':
+        return state.screen === 'nickname' ? { ...state, nickname: cleanNickname(action.nickname) } : state;
+
+      case 'begin':
+        return state.screen === 'nickname'
+          ? { ...state, screen: 'round', roundIndex: 0, nickname: state.nickname.trim() }
+          : state;
 
       case 'setImpression':
         // The impression is locked once the player moves on to the evidence.
@@ -96,6 +118,12 @@ export function makeReducer(rounds: Round[]) {
 
       case 'setInterest':
         return state.screen === 'ending' ? { ...state, interest: action.interest } : state;
+
+      case 'finish':
+        return state.screen === 'ending' ? { ...state, screen: 'celebrate' } : state;
+
+      case 'backToRecap':
+        return state.screen === 'celebrate' ? { ...state, screen: 'ending' } : state;
 
       case 'restart':
         return initialState(rounds.length);

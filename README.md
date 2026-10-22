@@ -1,6 +1,6 @@
 # Can You Outsmart the AI?
 
-A mobile-first, bilingual (English / 繁體中文) evidence-checking game for an HKU Information Day BSIM presentation. Three rounds, about 3–4 minutes. No backend, no live AI, no tracking.
+A mobile-first, bilingual (English / 繁體中文) evidence-checking game for an HKU Information Day BSIM presentation. Three rounds, about 3–4 minutes. No live AI, no accounts, and only anonymous play counts.
 
 > All scenarios and evidence are fictional teaching examples. AI-style answers are prepared examples. No live AI is running.
 
@@ -18,7 +18,7 @@ src/
   styles.css       ← all styling (colour tokens at the top, dark mode, reduced motion)
 ```
 
-**Flow:** Welcome → for each round: first impression (unscored) → evidence cards + verdict + reason → submit → feedback → … → recap → pick an interest → suggested topic + conversation-starter card.
+**Flow:** Welcome → optional nickname → for each round: first impression (unscored) → evidence cards + verdict + reason → submit → feedback → … → recap → pick an interest → suggested topic + conversation-starter card → Finish → celebration page.
 
 **Rules that matter:**
 - Scoring compares stable IDs (`correctVerdict`, `correctReasonId`), never text or position. Verdict = 2, reason = 1, max 9.
@@ -61,7 +61,26 @@ Every push to `main` redeploys automatically. To show the programme link button,
 
 For a USB stick or a kiosk laptop with no internet, use `npm run build:single`. It creates one self-contained file, `dist-single/index.html`, that opens directly in a browser.
 
-After the page loads, the game makes no further network requests. It uses no remote fonts and no external assets.
+The game uses no remote fonts or external assets. Apart from three tiny anonymous counts per game (below), it makes no network requests after loading, and it keeps working if those fail.
+
+## Play counts (how many people played)
+
+The Cloudflare Worker in `worker/index.ts` keeps anonymous totals in a Durable Object:
+
+- **Games started**: counted when round 1 begins
+- **Games finished**: counted when the recap appears
+- **Topic chosen**: which of the three interests players picked
+- The same totals for each day (Hong Kong time)
+
+**To view them**, open `https://<your-site>/stats`. It refreshes every 30 seconds. Raw JSON is at `/api/stats`.
+
+**What is not collected:** nicknames, answers, scores, IP addresses, cookies and device IDs. The nickname stays in the player's browser memory and is never sent.
+
+**Caveats**
+- Anyone could send fake counts to `/api/event`, so treat the numbers as a good estimate rather than an audit.
+- The stats page is public to anyone who knows the address. To make it private, protect `/stats` and `/api/stats` with Cloudflare Access (Zero Trust).
+- **To switch counting off,** set `COUNT_PLAYS = false` in `src/config.ts`, or build with `VITE_COUNT_PLAYS=false`. The offline single-file build never counts.
+- **To reset the counts,** rename the counter in `worker/index.ts` (`idFromName('global')` → for example `'global-2027'`).
 
 ## Editing guide
 
@@ -92,9 +111,11 @@ There are no logos. The programme is named only in a text heading (`programmeCon
 - [x] TypeScript strict build passes; production build succeeds.
 - [x] Unit tests (vitest): all correct = 9/9; all wrong = 0; verdict-only = 2 and reason-only = 1 each time; first impression never changes points; repeated submit adds nothing; answers lock after submit; answers can be revised before submit; can't submit or advance without both choices; opening cards earns nothing; restart resets to initial state; every string exists in en + zh; each correct reason ID exists.
 - [x] Play-through test (jsdom): full game; evidence opened in reverse order; language switched mid-round keeps the verdict, opened cards and round; "Good update" and "kept judgement" messages; personalisation follows the chosen interest; starter card opens and switches language; no programme link while unset; Play again clears answers.
-- [x] Headless Chromium at 360 × 740, keyboard only (Tab / arrows / Space / Enter / Esc), English light mode and 繁中 dark mode, reduced motion: reached 9/9; no horizontal scroll on any screen; 0 network requests after first load; no console errors; focus returns to the trigger after closing the starter card; `<html lang>` switches to `zh-Hant-HK`.
+- [x] Local Worker (`wrangler dev`): `/api/event` counts start/finish/topic and rejects unknown events (400) and GET (405); `/api/stats` totals match; `/stats` page loads; `wrangler deploy --dry-run` accepts the config. A full browser play-through sends exactly 3 counts per game.
+- [x] Headless Chromium at 360 × 740, keyboard only (Tab / arrows / Space / Enter / Esc), English light mode and 繁中 dark mode, reduced motion: reached 9/9; no horizontal scroll on any screen; only the 3 anonymous count requests after first load; no console errors; focus returns to the trigger after closing the starter card; `<html lang>` switches to `zh-Hant-HK`.
 
 ### Still to check
+- [ ] After Cloudflare redeploys: play one game on the live site, then open `/stats` and check that it shows 1 started and 1 finished.
 - [ ] Real phones: iOS Safari and Android Chrome, scanning the actual QR code on venue Wi-Fi.
 - [ ] Screen readers: VoiceOver (iOS) and TalkBack (Android). Check the step announcements, the radio groups and the feedback heading.
 - [ ] A native Hong Kong Chinese speaker proofreads the 繁中 text, especially the title 「你能比 AI 更醒目嗎？」.

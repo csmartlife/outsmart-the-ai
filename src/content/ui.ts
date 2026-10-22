@@ -31,7 +31,7 @@ const en = {
   scoringMax: 'Maximum: 9 evidence points',
   disclosureFictional: 'All game scenarios, including their names and evidence, are fictional teaching examples.',
   disclosurePrepared: 'AI-style answers are prepared examples. No live AI is running.',
-  disclosurePrivacy: 'No personal data is collected. Nothing is saved after you close the page.',
+  disclosurePrivacy: 'We only count anonymous plays. Your nickname stays on your screen and is never sent or saved.',
 
   scoreLabel: 'Evidence points',
   roundOf: 'Round {n} of {total}',
@@ -98,6 +98,7 @@ const en = {
   seeRecap: 'See my recap',
 
   recapTitle: 'Your information detective recap',
+  recapTitleNamed: '{name}’s information detective recap',
   scoreUnit: '/ 9 evidence points',
   scoreNote: 'This is a short game for fun. It doesn’t measure intelligence or suitability for any programme.',
   demonstrated: 'You demonstrated this skill in this round.',
@@ -116,6 +117,21 @@ const en = {
   starterClose: 'Close',
   creditsLead: 'An extended learning game for the HKU Information Day workshop',
   creditsBy: 'By',
+  nickTitle: 'Pick your detective name',
+  nickIntro: 'Optional, just for fun. It only appears on your screen and is never sent or saved.',
+  nickLabel: 'Nickname',
+  nickPlaceholder: 'e.g. Detective Mei',
+  nickSuggest: 'Or tap one:',
+  nickSuggestions: ['Agent Byte', 'Detective Pixel', 'Captain Query', 'Inspector Data'],
+  nickStart: 'Start the investigation',
+  nickSkip: 'Skip, play without a name',
+  finish: 'Finish',
+  celebrateTitle: 'Congratulations, detective!',
+  celebrateTitleNamed: 'Congratulations, {name}!',
+  celebrateLead: 'You finished all three cases. You read the claims, opened the evidence and made your own call. That’s what checking information looks like.',
+  celebrateTakeaways: 'Three things to take with you',
+  celebrateThanks: 'Thanks for playing, and have fun at HKU Info Day 2026!',
+  backToRecap: 'Back to my recap',
 };
 
 export type UIStrings = typeof en;
@@ -138,7 +154,7 @@ const zh: UIStrings = {
   scoringMax: '滿分：9 個證據分',
   disclosureFictional: '遊戲中所有情境（包括當中的人名和證據）均為虛構的教學例子。',
   disclosurePrepared: 'AI 風格的答案是預先準備的例子，並沒有運行任何即時 AI。',
-  disclosurePrivacy: '本遊戲不收集任何個人資料。關閉網頁後不會保留任何紀錄。',
+  disclosurePrivacy: '我們只會統計匿名的遊玩次數。你的暱稱只會顯示在你的畫面上，不會傳送或儲存。',
 
   scoreLabel: '證據分',
   roundOf: '第 {n} 回合（共 {total} 回合）',
@@ -205,6 +221,7 @@ const zh: UIStrings = {
   seeRecap: '查看我的回顧',
 
   recapTitle: '你的資訊偵探回顧',
+  recapTitleNamed: '{name} 的資訊偵探回顧',
   scoreUnit: '/ 9 個證據分',
   scoreNote: '這只是一個輕鬆的小遊戲，並不能衡量聰明程度，也不能判斷你是否適合任何課程。',
   demonstrated: '你在這個回合展示了這項技巧。',
@@ -223,6 +240,21 @@ const zh: UIStrings = {
   starterClose: '關閉',
   creditsLead: '本遊戲是港大資訊日工作坊的延伸學習遊戲',
   creditsBy: '主講',
+  nickTitle: '揀一個偵探代號',
+  nickIntro: '可以不填，純粹好玩。代號只會顯示在你的畫面上，不會傳送或儲存。',
+  nickLabel: '暱稱',
+  nickPlaceholder: '例如：偵探阿敏',
+  nickSuggest: '或者揀一個：',
+  nickSuggestions: ['數據神探', '搜尋特工', '證據獵人', '像素偵探'],
+  nickStart: '開始調查',
+  nickSkip: '略過，不用暱稱',
+  finish: '完成',
+  celebrateTitle: '恭喜你，偵探！',
+  celebrateTitleNamed: '恭喜你，{name}！',
+  celebrateLead: '你完成了全部三個案件：細閱說法、打開證據，再作出自己的判斷。這就是查證資訊的方法。',
+  celebrateTakeaways: '帶走這三個重點',
+  celebrateThanks: '多謝參與，祝你在香港大學資訊日 2026 玩得開心！',
+  backToRecap: '返回我的回顧',
 };
 
 export const ui: Record<Lang, UIStrings> = { en, zh };
