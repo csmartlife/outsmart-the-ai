@@ -26,7 +26,7 @@ const VERDICT_ICONS: Record<Verdict, string> = { supported: '✓', contradicted:
 export function RoundScreen({ round, index, total, answer, dispatch, lang, t }: Props) {
   const stage = answer.submitted ? 'feedback' : answer.investigating ? 'evidence' : 'impression';
   const headingRef = useFocusHeading<HTMLHeadingElement>(`${round.id}-${stage === 'feedback' ? 'fb' : 'q'}`);
-  const evidenceRef = useFocusHeading<HTMLHeadingElement>(stage === 'evidence' ? `${round.id}-ev` : null);
+  const evidenceRef = useFocusHeading<HTMLHeadingElement>(stage === 'evidence' ? `${round.id}-ev` : null, 'into');
 
   if (stage === 'feedback') {
     return <Feedback round={round} index={index} total={total} answer={answer} dispatch={dispatch} lang={lang} t={t} headingRef={headingRef} />;

@@ -328,14 +328,14 @@ h3:focus-visible {
 
 .hero__icon {
   flex: none;
-  width: 56px;
-  height: 56px;
-  margin-top: 6px;
+  width: 44px;
+  height: 44px;
+  margin-top: 4px;
   animation: wobble 2.4s ease-in-out 0.4s 1 both;
 }
 
 .hero__title {
-  font-size: clamp(2.1rem, 10vw, 3.4rem);
+  font-size: clamp(1.75rem, 7.6vw, 2.5rem);
   line-height: 1.05;
   font-weight: 900;
   letter-spacing: -0.02em;
