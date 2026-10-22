@@ -21,8 +21,8 @@ export const rounds: Round[] = [
       zh: '我需要一部至少有 16 GB RAM 的手提電腦。連運費在內，我的總預算是 HK$6,000。這個優惠合適嗎？',
     },
     aiAnswer: {
-      en: 'Yes. The NovaBook 14 has 16 GB of RAM and costs HK$5,880, so it meets both your requirements.',
-      zh: '合適。NovaBook 14 有 16 GB RAM，售價 HK$5,880，兩項要求都符合。',
+      en: 'Good news: this deal fits! The NovaBook 14 comes with 16 GB of RAM, which meets your minimum. It is priced at HK$5,880, which is under your HK$6,000 budget. It meets both of your requirements, so you can go ahead and order it.',
+      zh: '好消息，這個優惠合適！NovaBook 14 配備 16 GB RAM，符合你的最低要求。售價 HK$5,880，低於你 HK$6,000 的預算。兩項要求都符合，你可以放心落單。',
     },
     evidence: [
       {
@@ -91,8 +91,8 @@ export const rounds: Round[] = [
       zh: '要檢查整個要求，不要只看最顯眼的數字。',
     },
     connection: {
-      en: 'Information quality: checking whether information is complete and useful for a decision.',
-      zh: '資訊質素：檢查資訊是否完整，是否足以幫助作出決定。',
+      en: 'Information quality: completeness and accuracy are two of the quality dimensions from today’s workshop. Here, an incomplete answer led to a wrong decision.',
+      zh: '資訊質素：「完整性」和「準確性」是今天工作坊介紹的資訊質素指標之一。這次，一個不完整的答案導致了錯誤的決定。',
     },
     tip: {
       en: 'Tip: add up every required cost, including delivery, before comparing with the budget.',
@@ -108,12 +108,12 @@ export const rounds: Round[] = [
     },
     recapSkill: { en: 'Checking source permissions', zh: '檢查來源的使用許可' },
     question: {
-      en: 'Can I use this illustration in my school presentation if I follow the permission statement?',
-      zh: '如果我遵守使用許可聲明，可以在學校簡報中使用這幅插圖嗎？',
+      en: 'I found this illustration through an image search. Can I use it in my school presentation if I follow its licence?',
+      zh: '我在圖片搜尋中找到這幅插圖。如果我遵守它的授權條款，可以在學校簡報中使用嗎？',
     },
     aiAnswer: {
-      en: 'Yes. The creator explicitly permits reuse in school presentations if you include the requested credit.',
-      zh: '可以。創作者明確允許在學校簡報中重用，只要你按要求註明出處。',
+      en: 'Yes, you can. The creator, Alex Chan, shares “Harbour Lights” under a CC BY 4.0 licence, which allows reuse as long as you give credit. Add a credit with the title, author, source and licence, and it is fine to use in your school presentation.',
+      zh: '可以。創作者 Alex Chan 以 CC BY 4.0 授權分享《Harbour Lights》，只要註明出處便可重用。加上包括標題、作者、來源和授權的出處標示，就可以在學校簡報中使用。',
     },
     evidence: [
       {
@@ -124,12 +124,16 @@ export const rounds: Round[] = [
           { en: 'Illustration: Harbour Lights', zh: '插圖：《Harbour Lights》' },
           { en: 'Creator: Alex Chan, a fictional illustrator', zh: '創作者：Alex Chan（虛構的插畫師）' },
           {
-            en: 'Permission: “You may reuse this illustration in school presentations if you credit ‘Harbour Lights — Alex Chan’.”',
-            zh: '使用許可：「如註明『Harbour Lights — Alex Chan』，你可以在學校簡報中重用這幅插圖。」',
+            en: 'Licence: CC BY 4.0. You may reuse this work if you give appropriate credit.',
+            zh: '授權：CC BY 4.0。只要適當註明出處，便可重用這件作品。',
           },
           {
-            en: 'The permission applies to the exact illustration shown.',
-            zh: '許可適用於網頁上展示的這幅插圖本身。',
+            en: 'Requested credit: Title, Author, Source, Licence',
+            zh: '要求的出處標示：標題、作者、來源、授權',
+          },
+          {
+            en: 'The licence applies to the exact illustration shown.',
+            zh: '授權適用於網頁上展示的這幅插圖本身。',
           },
         ],
       },
@@ -140,7 +144,10 @@ export const rounds: Round[] = [
         facts: [
           { en: 'A classroom presentation', zh: '一次課堂簡報' },
           { en: 'The illustration will appear unchanged', zh: '插圖會原樣使用，不作修改' },
-          { en: 'Its requested credit will appear directly below it', zh: '指定的出處會放在插圖正下方' },
+          {
+            en: 'Credit directly below it: “Harbour Lights” by Alex Chan, creator’s portfolio page, CC BY 4.0',
+            zh: '插圖正下方的出處：“Harbour Lights” by Alex Chan, creator’s portfolio page, CC BY 4.0',
+          },
         ],
       },
       {
@@ -149,7 +156,8 @@ export const rounds: Round[] = [
         title: { en: 'A search-results thumbnail', zh: '搜尋結果中的縮圖' },
         facts: [
           { en: 'Shows the same illustration', zh: '顯示同一幅插圖' },
-          { en: 'Contains no permission information', zh: '沒有任何使用許可資訊' },
+          { en: 'No usage-rights filter was applied to the search', zh: '搜尋時沒有使用「使用權」篩選' },
+          { en: 'Contains no licence information', zh: '沒有任何授權資訊' },
           { en: 'Links back to the creator’s page', zh: '連結回創作者的網頁' },
         ],
       },
@@ -166,8 +174,8 @@ export const rounds: Round[] = [
       {
         id: 'permission-condition-met',
         text: {
-          en: 'The original creator’s permission covers this use, and the planned credit meets the stated condition.',
-          zh: '原創者的許可涵蓋這個用途，而計劃中的出處標示符合所列明的條件。',
+          en: 'The creator’s CC BY 4.0 licence covers this use, and the planned credit includes the title, author, source and licence.',
+          zh: '創作者的 CC BY 4.0 授權涵蓋這個用途，而計劃中的出處標示包括了標題、作者、來源和授權。',
         },
       },
       {
@@ -180,20 +188,20 @@ export const rounds: Round[] = [
     ],
     correctReasonId: 'permission-condition-met',
     explanation: {
-      en: 'The answer is supported here because you checked the original permission and your planned use meets its condition. Finding an image through search alone would not establish permission.',
-      zh: '這個答案在這裡有證據支持，因為你查看了原本的使用許可，而你的使用計劃符合它的條件。單靠在搜尋結果中找到圖片，並不能證明你已獲得許可。',
+      en: 'The answer is supported here because you checked the licence on the creator’s own page, and your planned credit meets its condition. Finding an image through search alone would not establish permission: “findable” is not “free to use”.',
+      zh: '這個答案在這裡有證據支持，因為你在創作者本身的網頁上查看了授權，而你計劃的出處標示符合它的條件。單靠在搜尋結果中找到圖片，並不能證明你已獲得許可：「找得到」不等於「免費用」。',
     },
     takeaway: {
       en: 'Trust should follow the evidence. A supported answer deserves acceptance.',
       zh: '信任應該跟隨證據。有證據支持的答案，值得接受。',
     },
     connection: {
-      en: 'Information literacy: finding the original source and understanding how information may be used.',
-      zh: '資訊素養：找出原始來源，並了解資訊可以怎樣使用。',
+      en: 'Information retrieval and Creative Commons: tracing the original source and checking usage rights before you reuse, as in today’s workshop.',
+      zh: '資訊檢索與創用 CC：重用之前，先追查原始來源並檢查使用權，正如今天工作坊所介紹。',
     },
     tip: {
-      en: 'Tip: when the original source’s conditions are met, a well-supported answer can be accepted. A search thumbnail alone doesn’t show permission.',
-      zh: '小貼士：如果符合原始來源列明的條件，有充分證據支持的答案是可以接受的。單看搜尋縮圖並不能證明獲得許可。',
+      en: 'Tip: “findable” is not “free to use”. Check the licence on the original source (or filter image searches by usage rights), then credit Title, Author, Source and Licence. When the conditions are met, a supported answer can be accepted.',
+      zh: '小貼士：「找得到」不等於「免費用」。先在原始來源查看授權（或在圖片搜尋中按使用權篩選），再註明標題、作者、來源和授權。條件符合時，有證據支持的答案是可以接受的。',
     },
     caution: {
       en: 'This is a simplified, fictional permission-checking exercise, not legal advice. Real permissions vary, so always read each source’s own terms.',
@@ -213,8 +221,8 @@ export const rounds: Round[] = [
       zh: '這項調查能否證明是溫習 App 令學生的成績進步？',
     },
     aiAnswer: {
-      en: 'Yes. Seventy per cent of surveyed users said their grades improved, so the app caused the improvement.',
-      zh: '能。七成受訪用戶表示成績有進步，所以是這個 App 令成績進步。',
+      en: 'Yes. In the survey, 70% of students who used the app said their grades improved. That is a clear majority, so the app caused the improvement. It is an effective study tool.',
+      zh: '能。調查中，七成使用這個 App 的學生表示成績有進步。這是明顯的大多數，所以是這個 App 令成績進步，它是一個有效的溫習工具。',
     },
     evidence: [
       {
@@ -292,8 +300,8 @@ export const rounds: Round[] = [
       zh: '數字正確，結論仍然可能站不住腳。',
     },
     connection: {
-      en: 'Data interpretation: asking what a dataset can and cannot tell us.',
-      zh: '數據解讀：思考一組數據能告訴我們甚麼、不能告訴我們甚麼。',
+      en: 'Data interpretation and data mining: asking what a dataset can and cannot tell us, and judging how reliable and objective it is.',
+      zh: '數據解讀與數據探勘：思考一組數據能告訴我們甚麼、不能告訴我們甚麼，並判斷它是否可靠和客觀。',
     },
     tip: {
       en: 'Tip: ask whether the data shows a cause or only a pattern. Look for a comparison group and other influences.',

@@ -38,7 +38,7 @@ const en = {
   skillLabel: 'Skill',
   questionLabel: 'The question',
   aiLabel: 'AI-style answer',
-  aiBadge: 'Prepared example',
+  aiBadge: 'Sample answer written for this game',
 
   impressionPrompt: 'First impression?',
   impressionHint: 'Not scored. Just notice your gut feeling.',
@@ -145,7 +145,7 @@ const zh: UIStrings = {
   skillLabel: '技巧',
   questionLabel: '問題',
   aiLabel: 'AI 風格的答案',
-  aiBadge: '預先準備的例子',
+  aiBadge: '為本遊戲編寫的示範答案',
 
   impressionPrompt: '第一印象？',
   impressionHint: '不計分，留意一下你的直覺就可以。',
